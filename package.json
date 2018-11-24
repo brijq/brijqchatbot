@@ -1,17 +1,25 @@
 {
-  "name": "hero",
+  "name": "brian-chat",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "chatbot",
+  "main": "index.js",
+  "author": "brian",
+  "license": "ISC",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "gcloud app deploy",
+    "start": "node app.js",
+    "lint": "repo-tools lint",
+    "pretest": "npm run lint",
+    "system-test": "repo-tools test app",
+    "test": "npm run system-test",
+    "e2e-test": "repo-tools test deploy"
   },
+
   "repository": {
     "type": "git",
     "url": ""
   },
-  "author": "",
-  "license": "ISC",
+
   "dependencies": {
     "body-parser": "^1.18.3",
     "dialogflow": "^0.5.0",
