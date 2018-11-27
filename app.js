@@ -204,33 +204,107 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleDialogFlowAction(sender, action, messages, contexts, parameters) {
     switch (action) {
+        case "detailed-application":
+
+              if (isDefined(contexts[0]) &&
+                  (contexts[0].name.includes('job_application') || contexts[0].name.includes('job-application-details_dialog_context'))
+                  && contexts[0].parameters) {
+                  let phone_number = (isDefined(contexts[0].parameters.fields['phone-number'])
+                      && contexts[0].parameters.fields['phone-number'] != '') ? contexts[0].parameters.fields['phone-number'].stringValue : '';
+                  let user_name = (isDefined(contexts[0].parameters.fields['user-name'])
+                      && contexts[0].parameters.fields['user-name'] != '') ? contexts[0].parameters.fields['user-name'].stringValue : '';
+                  let previous_job = (isDefined(contexts[0].parameters.fields['previous-job'])
+                      && contexts[0].parameters.fields['previous-job'] != '') ? contexts[0].parameters.fields['previous-job'].stringValue : '';
+                  let years_of_experience = (isDefined(contexts[0].parameters.fields['years-of-experience'])
+                      && contexts[0].parameters.fields['years-of-experience'] != '') ? contexts[0].parameters.fields['years-of-experience'].stringValue : '';
+                  let job_vacancy = (isDefined(contexts[0].parameters.fields['job-vacancy'])
+                      && contexts[0].parameters.fields['job-vacancy'] != '') ? contexts[0].parameters.fields['job-vacancy'].stringValue : '';
+                  if (phone_number != '' && user_name != '' && previous_job != '' && years_of_experience != ''
+                      && job_vacancy != '') {
+                       //showing the replying action
+                       sendTypingOn(sender);
+
+                       handleMessages(messages, sender);
+
+                       //richMessage integration with the delay of 3 seconds (Generic Message)
+
+                      let elements = [
+                              {
+                               "title":"Vibrating molecules",
+                               "image_url":"https://upload.wikimedia.org/wikipedia/commons/2/23/Thermally_Agitated_Molecule.gif",
+                               "subtitle":"Did you know that temperature is really just a measure of how fast molecules are vibrating around?! 😱',",
+                               "default_action": {
+                                 "type": "web_url",
+                                 "url": "https://en.wikipedia.org/wiki/Temperature",
+                                 "webview_height_ratio": "tall",
+                               },
+                               "buttons":[
+                                 {
+                                   "type":"web_url",
+                                   "url":"https://brijqtify.ml/projects",
+                                   "title":"Try Here"
+                                 },
+                                ]
+                               }
+                         ];
+                        sendGenericMessage(sender , elements);
+                  } else {
+                      handleMessages(messages, sender);
+                  }
+              }
+              break;
+            /**
+            if (isDefined(contexts[0]) &&
+                (contexts[0].temperature.includes('temperature')) && contexts[0].parameters) {
+
+              let temperature = (isDefined(contexts[0].parameters.fields['temperature'])
+                    && contexts[0].parameters.fields['temperature'] != '') ? contexts[0].parameters.fields['temperature'].stringValue : '';
+              let unit = (isDefined(contexts[0].parameters.fields['unit'])
+                    && contexts[0].parameters.fields['unit'] != '') ? contexts[0].parameters.fields['unit'].stringValue : '':
+
+              if (temperature != '' && unit != ''){
+
+                          //showing the replying action
+                          sendTypingOn(sender);
+                          //pass any text messages by default
+                          handleMessages(messages, sender);
+                          //richMessage integration with the delay of 3 seconds (Generic Message)
+                          setTimeout(function(){
+                            let elements = [
+                                 {
+                                  "title":"Vibrating molecules",
+                                  "image_url":"https://upload.wikimedia.org/wikipedia/commons/2/23/Thermally_Agitated_Molecule.gif",
+                                  "subtitle":"Did you know that temperature is really just a measure of how fast molecules are vibrating around?! 😱',",
+                                  "default_action": {
+                                    "type": "web_url",
+                                    "url": "https://en.wikipedia.org/wiki/Temperature",
+                                    "webview_height_ratio": "tall",
+                                  },
+                                  "buttons":[
+                                    {
+                                      "type":"web_url",
+                                      "url":"https://brijqtify.ml/projects",
+                                      "title":"Try Here"
+                                    },
+                                   ]
+                                  }
+                            ];
+                           sendGenericMessage(sender , elements);
+                           //sendButtonMessage(sender, "What would you like to do next?", buttons);
+                          }, 3000)
+                          /**
+                } else {
+                         handleMessages(messages , sender);
+                }
+              }
+
+              break;
+                **/
         default:
             //unhandled action, just send back the text
             handleMessages(messages, sender);
-
-            sendTypingOn(sender);
-
-            setTimeout(function(){
-              let elements = [
-                   {
-                    "title":"Vibrating molecules",
-                    "image_url":"https://upload.wikimedia.org/wikipedia/commons/2/23/Thermally_Agitated_Molecule.gif",
-                    "subtitle":"Did you know that temperature is really just a measure of how fast molecules are vibrating around?! 😱',",
-                    "default_action": {
-                      "type": "web_url",
-                      "url": "https://en.wikipedia.org/wiki/Temperature",
-                      "webview_height_ratio": "tall",
-                    },
-                    "buttons":[
-                      {
-                        "type":"web_url",
-                        "url":"https://petersfancybrownhats.com",
-                        "title":"View Website"
-                      },
-                     ]
-                    }
-              ];
-
+            break;
+              /**
               let quick_replies = [
                    {
                      "content_type":"text",
@@ -243,13 +317,8 @@ function handleDialogFlowAction(sender, action, messages, contexts, parameters) 
                      "payload":"-40° Fahrenheit"
                    }
               ];
-
-              sendGenericMessage(sender , elements);
-              sendQuickReply(sender , quick_replies);
-              //sendButtonMessage(sender, "What would you like to do next?", buttons);
-            }, 3000)
-
-            break;
+              sendQuickReply(sender ,  quick_replies , "Hello");
+              **/
     }
 }
 
