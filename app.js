@@ -230,12 +230,12 @@ function handleDialogFlowAction(sender, action, messages, contexts, parameters) 
 
                       let elements = [
                               {
-                               "title":"Vibrating molecules",
-                               "image_url":"https://upload.wikimedia.org/wikipedia/commons/2/23/Thermally_Agitated_Molecule.gif",
-                               "subtitle":"Did you know that temperature is really just a measure of how fast molecules are vibrating around?! 😱',",
+                               "title":"Ways to succeed and be mastering in job search!",
+                               "image_url":"https://www.wisdomjobs.com/careertips/9-ways-to-get-succeed-in-job-search.jpg",
+                               "subtitle":" 1. Question 1 ... Click to find out more! ",
                                "default_action": {
                                  "type": "web_url",
-                                 "url": "https://en.wikipedia.org/wiki/Temperature",
+                                 "url": "https://www.youtube.com/watch?v=_zIlQ-YfvdE",
                                  "webview_height_ratio": "tall",
                                },
                                "buttons":[
